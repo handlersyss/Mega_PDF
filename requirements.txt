@@ -1,0 +1,6 @@
+PyPDF2
+tk
+comtypes
+pypiwin32
+python-docx
+pdf2docx
