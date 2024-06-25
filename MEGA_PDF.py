@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-import PyPDF2
 import os
-import win32com.client
-from pdf2docx import parse
+import subprocess
+import platform
 
 # Função de mesclagem de PDFs e seleção de arquivos
 def merge_pdfs(files, output_path):
+    import PyPDF2
     merger = PyPDF2.PdfMerger()
     for pdf in files:
         merger.append(pdf)
@@ -26,16 +26,28 @@ def select_pdf_files_and_merge():
 
 # Função para converter arquivos Word para PDF
 def word_to_pdf(files):
+    import win32com.client # Apenas para Windows
     word = win32com.client.Dispatch("Word.Application")
+    word.Visible = False
     try:
         for file in files:
             if not os.path.isfile(file):
                 messagebox.showwarning("Warning", f"File not found: {file}")
                 continue
-            doc = word.Documents.Open(file)
-            pdf_path = os.path.splitext(file)[0] + ".pdf"
-            doc.SaveAs(pdf_path, FileFormat=17) # 17 corresponde ao formato PDF
-            doc.close()
+            abs_path = os.path.abspath(file)
+            try:
+                doc = word.Documents.Open(abs_path)
+            except Exception as open_err:
+                messagebox.showerror("Error", f"Error opening file '{file}': {str(open_err)}")
+                continue
+            pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
+            try: 
+                doc.SaveAs(pdf_path, FileFormat=17) # 17 corresponde ao formato PDF
+                doc.Close()
+            except Exception as save_err:
+                messagebox.showerror("Error", f"Error saving file '{file}' as PDF: {str(save_err)}")
+                doc.Close()
+                continue
         word.Quit()
         messagebox.showinfo("Success", "Word files converted to PDF successfully.")
     except Exception as e:
@@ -44,7 +56,7 @@ def word_to_pdf(files):
 
 # Função para selecionar arquivos Word e converter para PDF
 def select_word_files_and_convert():
-    files = filedialog.askopenfilenames(filetype=[("Word files", "*.docx;*.doc")])
+    files = filedialog.askopenfilenames(filetypes=[("Word files", "*.docx;*.doc")])
     if files:
         try: 
             word_to_pdf(files)
@@ -53,20 +65,21 @@ def select_word_files_and_convert():
 
 # Função para converter arquivos PDF para Word            
 def pdf_to_word(files):
+    import pdf2docx
     for file in files:
         pdf_path = file
         pdf_name = os.path.basename(pdf_path)
         docx_path = os.path.splitext(pdf_path)[0] + ".docx"
         try:
             # Use pdf2docx to convert PDF to DOCX
-            parse(pdf_path, docx_path)
+            pdf2docx.parse(pdf_path, docx_path)
             messagebox.showinfo("Success", f"PDF file '{pdf_name}' converted to Word successfully.")
         except Exception as e:
             messagebox.showerror("Error", f"Error converting PDF file '{pdf_name}' to Word: {str(e)}")
 
 # Função para selecionar arquivos PDF e converter para Word
 def select_pdf_files_and_convert():
-    files = filedialog.askopenfilenames(filetype=[("PDF files", "*.pdf")])
+    files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
             pdf_to_word(files)
@@ -99,47 +112,16 @@ def creat_gui():
     frame = tk.Frame(root, padx=40, pady=40, bg='black')
     frame.pack(padx=20, pady=20)
 
-    select_button = tk.Button(frame, text="Select PDF Files to Merge", command=select_pdf_files_and_merge, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
+    select_button = tk.Button(frame, text="Juntar PDF", command=select_pdf_files_and_merge, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_button.pack(pady=10)
 
-    select_word_button = tk.Button(frame, text="Select Word Files", command=select_word_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
+    select_word_button = tk.Button(frame, text="Converter Word para PDF", command=select_word_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_word_button.pack(pady=10)
 
-    select_pdf_button = tk.Button(frame, text="Select PDF Files", command=select_pdf_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
+    select_pdf_button = tk.Button(frame, text="Converter PDF para Word", command=select_pdf_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     select_pdf_button.pack(pady=10)
 
     root.mainloop()
 
 if __name__=="__main__":
     creat_gui()
-
-#desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-#arquivos_path = os.path.join(desktop_path, "arquivos")
-
-#if not os.path.exists(arquivos_path):
-#    print("O diretório 'arquivos' não foi encontrado no desktop.")
-#    exit()
-
-#merger = PyPDF2.PdfMerger()
-
-#lista_arquivos = os.listdir(arquivos_path)
-#lista_arquivos.sort()
-#print(lista_arquivos)
-
-#for arquivo in lista_arquivos:
-#    if arquivo.endswith(".pdf"):
-#        arquivo_path = os.path.join(arquivos_path, arquivo)
-#        merger.append(arquivo_path)
-
-# Solicitar o nome do arquivo final ao usuario
-#nome_arquivo_final = input("Digite o nome do arquivo PDF final: ")
-
-# certifique-se de adicionar a extensão .pdf ao nome do arquivo, se ainda não estiver presente
-#if not nome_arquivo_final.endswith(".pdf"):
-#    nome_arquivo_final += ".pdf"
-
-#arquivo_final_path = os.path.join(desktop_path, nome_arquivo_final)
-
-
-#merger.write(arquivo_final_path)
-#merger.close()
