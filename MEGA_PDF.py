@@ -26,33 +26,50 @@ def select_pdf_files_and_merge():
 
 # Função para converter arquivos Word para PDF
 def word_to_pdf(files):
-    import win32com.client # Apenas para Windows
-    word = win32com.client.Dispatch("Word.Application")
-    word.Visible = False
-    try:
-        for file in files:
-            if not os.path.isfile(file):
-                messagebox.showwarning("Warning", f"File not found: {file}")
-                continue
-            abs_path = os.path.abspath(file)
-            try:
-                doc = word.Documents.Open(abs_path)
-            except Exception as open_err:
-                messagebox.showerror("Error", f"Error opening file '{file}': {str(open_err)}")
-                continue
-            pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
-            try: 
-                doc.SaveAs(pdf_path, FileFormat=17) # 17 corresponde ao formato PDF
-                doc.Close()
-            except Exception as save_err:
-                messagebox.showerror("Error", f"Error saving file '{file}' as PDF: {str(save_err)}")
-                doc.Close()
-                continue
-        word.Quit()
-        messagebox.showinfo("Success", "Word files converted to PDF successfully.")
-    except Exception as e:
-        messagebox.showerror("Error", f"Error converting Word files to PDF: {str(e)}")
-        word.Quit()
+    if platform.system() == "Windows":
+        import win32com.client # Apenas para Windows
+        word = win32com.client.Dispatch("Word.Application")
+        word.Visible = False
+        try:
+            for file in files:
+                if not os.path.isfile(file):
+                    messagebox.showwarning("Warning", f"File not found: {file}")
+                    continue
+                abs_path = os.path.abspath(file)
+                try:
+                    doc = word.Documents.Open(abs_path)
+                except Exception as open_err:
+                    messagebox.showerror("Error", f"Error opening file '{file}': {str(open_err)}")
+                    continue
+                pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
+                try: 
+                    doc.SaveAs(pdf_path, FileFormat=17) # 17 corresponde ao formato PDF
+                    doc.Close()
+                except Exception as save_err:
+                    messagebox.showerror("Error", f"Error saving file '{file}' as PDF: {str(save_err)}")
+                    doc.Close()
+                    continue
+            word.Quit()
+            messagebox.showinfo("Success", "Word files converted to PDF successfully.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error converting Word files to PDF: {str(e)}")
+            word.Quit()
+    else: # Para Linux e outros sistemas operacionais
+        try:
+            for file in files:
+                if not os.path.isfile(file):
+                    messagebox.showwarning("warnig", f"File not foud: {file}")
+                    continue
+                abs_path = os.path.abspath(file)
+                pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
+                try:
+                    subprocess.run(['libreoffice', '--headless', '--convert-to','pdf', abs_path], check=True)
+                    messagebox.showinfo("Sucess", f"Word file '{file}' converted to PDF successfully.")
+                except subprocess.CalledProcessError as err:
+                    messagebox.showerror("Error", f"Error converting file '{file}' to PDF: {str(err)}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error converting Word files to PDF: {str(e)}")
+
 
 # Função para selecionar arquivos Word e converter para PDF
 def select_word_files_and_convert():
