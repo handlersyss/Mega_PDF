@@ -1,0 +1,5 @@
+cups
+python3-tk
+libreoffice
+PyPDF2
+pdf2docx
