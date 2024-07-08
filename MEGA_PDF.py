@@ -83,7 +83,7 @@ def pdf_to_word(files):
         pdf_name = os.path.basename(pdf_path)
         docx_path = os.path.splitext(pdf_path)[0] + ".docx"
         try:
-            # Use pdf2docx to convert PDF to DOCX
+            # Use pdf2docx para converter PDF para Docx
             pdf2docx.parse(pdf_path, docx_path)
             messagebox.showinfo("Success", f"PDF file '{pdf_name}' converted to Word successfully.")
         except Exception as e:
@@ -97,6 +97,28 @@ def select_pdf_files_and_convert():
         except Exception as e:
             messagebox.showerror("Error", f"Error converting PDF files to Word: {str(e)}")
 
+def print_pdfs(files):
+    for file in files:
+        if platform.system() == "Windows":
+            try:
+                os.startfile(file, "print")
+            except Exception as e: 
+                messagebox.showerror("Error", f"Error printing file '{file}': {str(e)}")
+        else:
+            try:
+                subprocess.run(['lp', file], check=True)
+                messagebox.showeinfo("Sucess", f"PDF file '{file}' sent to printer sucessfully.")
+            except subprocess.CalledProcessError as arr:
+                messagebox.showerror("Error", f"Error printing file '{file}': {str(e)}")
+
+def select_pdf_files_and_print():
+    files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
+    if files:
+        try:
+            print_pdfs(files)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error printing PDF files: {str(e)}")
+
 def creat_gui():
     root = tk.Tk()
     root.title("MEGA PDF")
@@ -107,7 +129,7 @@ def creat_gui():
         ("████╗ ████║██╔════╝██╔════╝ ██╔══██╗    ██╔══██╗██╔══██╗██╔════╝", "#A569BD"),
         ("██╔████╔██║█████╗  ██║  ███╗███████║    ██████╔╝██║  ██║█████╗  ", "#7D3C98"),
         ("██║╚██╔╝██║██╔══╝  ██║   ██║██╔══██║    ██╔═══╝ ██║  ██║██╔══╝  ", "#A569BD"),
-        ("██║ ╚═╝ ██║███████╗╚██████╔╝██║  ██║    ██║     ██████╔╝██║     ", "#7D3C98"),
+        ("██║ ╚═╝ ██║███████╗╚██████╔╝██║  ██║    ██║     ██████╔╝██║     ", "#7D3C98"),    
         ("╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═════╝ ╚═╝     ", "#A569BD"),
         ("Criador: Edson França Neto", "purple"),
         ("Contato: (33)998341977", "purple"),
@@ -129,6 +151,9 @@ def creat_gui():
 
     select_pdf_button = tk.Button(frame, text="Converter PDF para Word", command=select_pdf_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     select_pdf_button.pack(pady=10)
+
+    print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=select_pdf_files_and_print, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
+    print_pdf_button.pack(pady=10)
 
     root.mainloop()
 
