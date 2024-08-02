@@ -3,6 +3,7 @@ from tkinter import filedialog, messagebox
 import os
 import subprocess
 import platform
+import zipfile
 
 def merge_pdfs(files, output_path):
     import PyPDF2
@@ -236,6 +237,25 @@ def select_pdf_files_and_print():
         except Exception as e:
             messagebox.showerror("Error", f"Error printing PDF files: {str(e)}")
 
+def compress_files(files):
+    output_file = filedialog.asksaveasfilename(defaultextension=".zip", filetypes=[("ZIP files", "*.zip")])
+    if output_file:
+        try:
+            with zipfile.ZipFile(output_file, 'w') as zipf:
+                for file in files:
+                    zipf.write(file, os.path.basename(file))
+            messagebox.showinfo("Success", f"Files compressed successfully into: {output_file}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error compressing files: {str(e)}")
+
+def select_files_and_compress():
+    files = filedialog.askopenfilenames()
+    if files:
+        try:
+            compress_files(files)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error compressing files: {str(e)}")
+
 def creat_gui():
     root = tk.Tk()
     root.title("MEGA PDF")
@@ -277,6 +297,10 @@ def creat_gui():
 
     select_excel_to_pdf_button = tk.Button(frame, text="Converter Excel para PDF", command=select_excel_files_and_convert_to_pdf, bg='#7D3C98', fg='white', highlightbackground='black')
     select_excel_to_pdf_button.pack(pady=10)
+
+    compress_files_button = tk.Button(frame, text="Compactar Arquivos", command=select_files_and_compress, bg='#7D3C98', fg='white', highlightbackground='black')
+    compress_files_button.pack(pady=10)
+
 
     root.mainloop()
 
