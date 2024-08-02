@@ -67,8 +67,9 @@ Defina a variável de ambiente JAVA_HOME: Após instalar o Java, você precisa d
 
 ----
 
-![image](https://github.com/handlersyss/Mega_PDF/assets/169811777/62fb8aca-f8d3-4d16-aa33-9637874cb015)
+![image](https://github.com/user-attachments/assets/c2d50a6a-cfc2-4ebc-b375-7f82b186e29c)
 
 ----
+
 
 Feedback e sugestões são bem-vindos! Sinta-se à vontade para compartilhar suas opiniões, ideias e melhorias para este script. Sua contribuição é muito apreciada.
