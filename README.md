@@ -13,6 +13,36 @@ Para realizar impressões, é necessário ter um leitor de PDF instalado e assoc
 
 Este programa é ideal para quem precisa gerenciar e converter documentos de maneira eficiente e sem restrições.
 
+----
+## Instalção
+
+Siga os passos abaixo para instalar o script:
+
+1. **Clone o repositório:**
+
+```bash
+   git clone https://github.com/handlersyss/Mega_PDF.git
+```
+
+2. **Acesse o diretório do projeto:**
+
+```bash
+    cd nome-do-repositorio
+```
+
+3. **Instale as dependências:**
+
+```bash
+    pip3 install -r requirements_linux.txt 
+    ou requirements_Windows.txt
+```
+
+4. **Execute o script:**
+
+```bash
+    python3 MEGA_PDF.py
+```
+
 OBS: Para evitar erro na hora de fazer a conversão do pdf para excel por falta da biblioteca JVM(Java Virtual Machine) necessária para a execução do Tabula, que é uma ferramenta Java.
 
 -----
