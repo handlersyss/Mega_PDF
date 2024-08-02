@@ -14,8 +14,9 @@ Para realizar impressões, é necessário ter um leitor de PDF instalado e assoc
 Este programa é ideal para quem precisa gerenciar e converter documentos de maneira eficiente e sem restrições.
 
 OBS: Algumas funções podem não funcionar no sistema Linux, eu peço que aguardem para novas atualizações do script para á perfeita execussão do programa.
+
 ----
-## Instalção
+## Instalação
 
 Siga os passos abaixo para instalar o script:
 
