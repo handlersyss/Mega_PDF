@@ -1,12 +1,13 @@
-# Conversosr de PDF
+# Mega PDF
 
 Este repositório contém um script robusto que permite:
 
-º Junção de arquivos PDF
-º Conversão entre formatos Word e PDF (e vice-versa)
-º Conversão entre PDF e Excel (e vice-versa)
-º Impressão de arquivos sem limites
-º O script é compatível tanto com Linux quanto com Windows. Para utilizar todas as funcionalidades, certifique-se de ter todos os requisitos instalados a partir dos arquivos .txt fornecidos.
+Junção de arquivos PDF
+Conversão entre formatos Word e PDF (e vice-versa)
+Conversão entre PDF e Excel (e vice-versa)
+Impressão de arquivos sem limites
+
+O script é compatível tanto com Linux quanto com Windows. Para utilizar todas as funcionalidades, certifique-se de ter todos os requisitos instalados a partir dos arquivos .txt fornecidos.
 
 Para realizar impressões, é necessário ter um leitor de PDF instalado e associado ao tipo de arquivo PDF no Windows. No Linux, certifique-se de que o CUPS (Common UNIX Printing System) esteja instalado e funcionando, pois o comando lp depende dele.
 
