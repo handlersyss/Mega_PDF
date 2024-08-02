@@ -1,6 +1,16 @@
 # Conversosr de PDF
 
-Este repositório contém um script robusto que permite a junção de arquivos PDF e a conversão entre os formatos Word e PDF e vice versa, sem limites de quantidade de arquivos e tambem imprimi arquivos sem limites. Compatível tanto com Linux quanto com Windows, basta ter todos os requisitos instalado dos arquivos txt e para conseguir fazer impressões basta ter um leitor de PDF instalado e associado ao tipo de arquivo PDF para Windows e certifique de que o CUPS(Common UNIX Printing System) se está instalado e funcionando, pois o comando lp depende dele, este programa é ideal para quem precisa gerenciar e converter documentos de maneira eficiente e sem restrições.
+Este repositório contém um script robusto que permite:
+
+º Junção de arquivos PDF
+º Conversão entre formatos Word e PDF (e vice-versa)
+º Conversão entre PDF e Excel (e vice-versa)
+º Impressão de arquivos sem limites
+º O script é compatível tanto com Linux quanto com Windows. Para utilizar todas as funcionalidades, certifique-se de ter todos os requisitos instalados a partir dos arquivos .txt fornecidos.
+
+Para realizar impressões, é necessário ter um leitor de PDF instalado e associado ao tipo de arquivo PDF no Windows. No Linux, certifique-se de que o CUPS (Common UNIX Printing System) esteja instalado e funcionando, pois o comando lp depende dele.
+
+Este programa é ideal para quem precisa gerenciar e converter documentos de maneira eficiente e sem restrições.
 
 OBS: Para evitar erro na hora de fazer a conversão do pdf para excel por falta da biblioteca JVM(Java Virtual Machine) necessária para a execução do Tabula, que é uma ferramenta Java.
 
