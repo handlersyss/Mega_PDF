@@ -23,15 +23,14 @@ Instale o Java: Você precisa ter o Java Development Kit (JDK) instalado em seu 
 
 Defina a variável de ambiente JAVA_HOME: Após instalar o Java, você precisa definir a variável de ambiente JAVA_HOME para apontar para o diretório de instalação do JDK. Aqui está como fazer isso no Windows:
 
-Clique com o botão direito no ícone "Meu Computador" ou "Este PC" na área de trabalho ou no explorador de arquivos e selecione "Propriedades".
-Clique em "Configurações avançadas do sistema".
-Clique em "Variáveis de ambiente".
-Em "Variáveis do sistema", clique em "Novo".
-Adicione JAVA_HOME como o nome da variável e o caminho do diretório do JDK (por exemplo, C:\Program Files\Java\jdk-11.0.2) como o valor da variável.
-Clique em "OK" para salvar as mudanças.
-Verifique se o Java está funcionando: Abra o Prompt de Comando e digite java -version para verificar se o Java está corretamente instalado e configurado.
-
-Reinicie o Python: Certifique-se de reiniciar qualquer script ou terminal Python para que ele reconheça as novas variáveis de ambiente.
+- Clique com o botão direito no ícone "Meu Computador" ou "Este PC" na área de trabalho ou no explorador de arquivos e selecione "Propriedades".
+- Clique em "Configurações avançadas do sistema".
+- Clique em "Variáveis de ambiente".
+- Em "Variáveis do sistema", clique em "Novo".
+- Adicione JAVA_HOME como o nome da variável e o caminho do diretório do JDK (por exemplo, C:\Program Files\Java\jdk-11.0.2) como o valor da variável.
+- Clique em "OK" para salvar as mudanças.
+- Verifique se o Java está funcionando: Abra o Prompt de Comando e digite java -version para verificar se o Java está corretamente instalado e configurado.
+- Reinicie o Python: Certifique-se de reiniciar qualquer script ou terminal Python para que ele reconheça as novas variáveis de ambiente.
 
 ----
 
