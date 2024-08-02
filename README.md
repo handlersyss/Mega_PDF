@@ -71,4 +71,5 @@ Defina a variável de ambiente JAVA_HOME: Após instalar o Java, você precisa d
 
 ----
 
+
 Feedback e sugestões são bem-vindos! Sinta-se à vontade para compartilhar suas opiniões, ideias e melhorias para este script. Sua contribuição é muito apreciada.
