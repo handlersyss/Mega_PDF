@@ -183,7 +183,7 @@ def excel_to_pdf(files):
                 pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
                 try:
                     workbook = excel.Workbooks.Open(abs_path)
-                    workbook.ExportAsFixedFormat(0, pdf_path)  # 0 corresponds to PDF format
+                    workbook.ExportAsFixedFormat(0, pdf_path)  # 0 corresponde ao formato PDF
                     workbook.Close(False)
                     messagebox.showinfo("Success", f"Excel file '{file}' converted to PDF successfully.")
                 except Exception as convert_err:
