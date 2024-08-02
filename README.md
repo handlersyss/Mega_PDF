@@ -26,3 +26,6 @@ Reinicie o Python: Certifique-se de reiniciar qualquer script ou terminal Python
 
 ![image](https://github.com/handlersyss/Mega_PDF/assets/169811777/62fb8aca-f8d3-4d16-aa33-9637874cb015)
 
+----
+
+Feedback e sugestões são bem-vindos! Sinta-se à vontade para compartilhar suas opiniões, ideias e melhorias para este script. Sua contribuição é muito apreciada.
