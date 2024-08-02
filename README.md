@@ -6,6 +6,7 @@ Este repositório contém um script robusto que permite:
 - **Conversão entre formatos Word e PDF (e vice-versa)
 - **Conversão entre PDF e Excel (e vice-versa)
 - **Impressão de arquivos sem limites
+- **Compactação de arquivos
 
 O script é compatível tanto com Linux quanto com Windows. Para utilizar todas as funcionalidades, certifique-se de ter todos os requisitos instalados a partir dos arquivos .txt fornecidos.
 
