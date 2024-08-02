@@ -97,6 +97,123 @@ def select_pdf_files_and_convert():
         except Exception as e:
             messagebox.showerror("Error", f"Error converting PDF files to Word: {str(e)}")
 
+#def pdf_to_excel(files):
+    #import pandas as pd
+    #from tabula import read_pdf
+    #for file in files:
+        #try:
+            #Le tabelas do PDF
+            #dfs = read_pdf(file, pages="all", multiple_tables=True)
+            #excel_path = os.path.splitext(file)[0] + ".xlsx"
+
+            #Escreve todas as tabelas em um arquivo excel
+            #with pd.ExcelWriter(excel_path) as writer:
+                #for idx, df in enumerate(dfs):
+                    #df.to_excel(writer, sheet_name=f'Table {idx + 1}', index=False)
+            #messagebox.showinfo("Sucess", f"PDF file '{file}' converted to Excel successfully.")
+        #except Exception as e:
+            #messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
+            
+def pdf_to_excel(files):
+    import pandas as pd
+    from tabula import read_pdf
+    import os
+
+    try:
+        for file in files:
+            if not os.path.isfile(file):
+                messagebox.showwarning("Warning", f"File not found: {file}")
+                continue
+            try:
+                # Lê tabelas do PDF
+                dfs = read_pdf(file, pages="all", multiple_tables=True)
+                excel_path = os.path.splitext(file)[0] + ".xlsx"
+                
+                # Filtra DataFrames vazios
+                dfs = [df for df in dfs if not df.empty]
+
+                if not dfs:
+                    messagebox.showinfo("Info", f"No tables found in PDF file '{file}' to convert to Excel.")
+                    continue
+
+                # Escreve todas as tabelas em um arquivo Excel
+                with pd.ExcelWriter(excel_path) as writer:
+                    for idx, df in enumerate(dfs):
+                        df.to_excel(writer, sheet_name=f'Table {idx + 1}', index=False)
+                messagebox.showinfo("Success", f"PDF file '{file}' converted to Excel successfully.")
+            except Exception as e:
+                messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while processing the files: {str(e)}")
+
+
+#def excel_to_pdf(files):
+#    import win32com.client
+#    if platform.system() == "Windows":
+#        #import win32com.client
+#        excel = win32com.client.Dispatch("Excel.Application")
+#        excel.Visible = False
+#        try:
+#            for file in files:
+#                if not os.path.isfile(file):
+#                    messagebox.showwarning("Warning", f"File not found: {file}")
+#                    continue
+#                abs_path = os.path.abspath(file)
+#                pdf_path = os.path.splitext(abs_path) [0] + ".pdf"
+#                workbook = excel.Workbook.Open(abs_path)
+#                workbook.ExportAsFixedFormat(0, pdf_path) # 0 corresponde ao formato PDF
+#                workbook.Close()
+#            excel.Quit()
+#            messagebox.showinfo("Success", "Excel files converted to PDF successfully.")
+#        except Exception as e:
+#            messagebox.showerror("Error", f"Error converting Excel files to PDF: {str(e)}")
+#            excel.Quit()               
+
+def excel_to_pdf(files):
+    if platform.system() == "Windows":
+        import win32com.client
+        excel = win32com.client.Dispatch("Excel.Application")
+        excel.Visible = False
+        try:
+            for file in files:
+                if not os.path.isfile(file):
+                    messagebox.showwarning("Warning", f"File not found: {file}")
+                    continue
+                abs_path = os.path.abspath(file)
+                pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
+                try:
+                    workbook = excel.Workbooks.Open(abs_path)
+                    workbook.ExportAsFixedFormat(0, pdf_path)  # 0 corresponds to PDF format
+                    workbook.Close(False)
+                    messagebox.showinfo("Success", f"Excel file '{file}' converted to PDF successfully.")
+                except Exception as convert_err:
+                    messagebox.showerror("Error", f"Error converting file '{file}' to PDF: {str(convert_err)}")
+                    if workbook:
+                        workbook.Close(False)
+            excel.Quit()
+        except Exception as e:
+            messagebox.showerror("Error", f"Error converting Excel files to PDF: {str(e)}")
+            excel.Quit()
+    else:
+        messagebox.showerror("Error", "Excel to PDF conversion is only supported on Windows.")
+
+
+def select_pdf_files_and_convert_to_excel():
+    files = filedialog.askopenfilenames(filetype=[("PDF files", "*.pdf")])
+    if files:
+        try:
+            pdf_to_excel(files)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error converting PDF files to Excel: {str(e)}")
+
+def select_excel_files_and_convert_to_pdf():
+    files = filedialog.askopenfilenames(filetypes=[("Excel files", "*.xlsx;*.xls")])
+    if files:
+        try:
+            excel_to_pdf(files)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error converting Excel files to PDF: {str(e)}")
+
 def print_pdfs(files):
     for file in files:
         if platform.system() == "Windows":
@@ -141,7 +258,7 @@ def creat_gui():
         label.pack()
 
     frame = tk.Frame(root, padx=40, pady=40, bg='black')
-    frame.pack(padx=20, pady=20)
+    frame.pack(padx=40, pady=40)
 
     select_button = tk.Button(frame, text="Juntar PDF", command=select_pdf_files_and_merge, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_button.pack(pady=10)
@@ -154,6 +271,12 @@ def creat_gui():
 
     print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=select_pdf_files_and_print, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     print_pdf_button.pack(pady=10)
+
+    select_pdf_to_excel_button = tk.Button(frame, text="Converter PDF para Excel", command=select_pdf_files_and_convert_to_excel, bg='#7D3C98', fg='white', highlightbackground='black')
+    select_pdf_to_excel_button.pack(pady=10)
+
+    select_excel_to_pdf_button = tk.Button(frame, text="Converter Excel para PDF", command=select_excel_files_and_convert_to_pdf, bg='#7D3C98', fg='white', highlightbackground='black')
+    select_excel_to_pdf_button.pack(pady=10)
 
     root.mainloop()
 
