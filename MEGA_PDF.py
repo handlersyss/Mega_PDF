@@ -99,21 +99,21 @@ def select_pdf_files_and_convert():
             messagebox.showerror("Error", f"Error converting PDF files to Word: {str(e)}")
 #So salvando
 #def pdf_to_excel(files):
-    #import pandas as pd
-    #from tabula import read_pdf
-    #for file in files:
-        #try:
-            #Le tabelas do PDF
-            #dfs = read_pdf(file, pages="all", multiple_tables=True)
-            #excel_path = os.path.splitext(file)[0] + ".xlsx"
+#    import pandas as pd
+#    from tabula import read_pdf
+#    for file in files:
+#        try:
+#           Le tabelas do PDF
+#            dfs = read_pdf(file, pages="all", multiple_tables=True)
+#            excel_path = os.path.splitext(file)[0] + ".xlsx"
 
-            #Escreve todas as tabelas em um arquivo excel
-            #with pd.ExcelWriter(excel_path) as writer:
-                #for idx, df in enumerate(dfs):
-                    #df.to_excel(writer, sheet_name=f'Table {idx + 1}', index=False)
-            #messagebox.showinfo("Sucess", f"PDF file '{file}' converted to Excel successfully.")
-        #except Exception as e:
-            #messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
+#            Escreve todas as tabelas em um arquivo excel
+#            with pd.ExcelWriter(excel_path) as writer:
+#                for idx, df in enumerate(dfs):
+#                    df.to_excel(writer, sheet_name=f'Table {idx + 1}', index=False)
+#            messagebox.showinfo("Sucess", f"PDF file '{file}' converted to Excel successfully.")
+#        except Exception as e:
+#            messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
             
 def pdf_to_excel(files):
     import pandas as pd
