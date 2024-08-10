@@ -280,17 +280,11 @@ def creat_gui():
     frame = tk.Frame(root, padx=40, pady=40, bg='black')
     frame.pack(padx=40, pady=40)
 
-    select_button = tk.Button(frame, text="Juntar PDF", command=select_pdf_files_and_merge, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
-    select_button.pack(pady=10)
-
     select_word_button = tk.Button(frame, text="Converter Word para PDF", command=select_word_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_word_button.pack(pady=10)
 
     select_pdf_button = tk.Button(frame, text="Converter PDF para Word", command=select_pdf_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     select_pdf_button.pack(pady=10)
-
-    print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=select_pdf_files_and_print, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
-    print_pdf_button.pack(pady=10)
 
     select_pdf_to_excel_button = tk.Button(frame, text="Converter PDF para Excel", command=select_pdf_files_and_convert_to_excel, bg='#7D3C98', fg='white', highlightbackground='black')
     select_pdf_to_excel_button.pack(pady=10)
@@ -300,6 +294,13 @@ def creat_gui():
 
     compress_files_button = tk.Button(frame, text="Compactar Arquivos", command=select_files_and_compress, bg='#7D3C98', fg='white', highlightbackground='black')
     compress_files_button.pack(pady=10)
+
+    select_button = tk.Button(frame, text="Juntar PDF", command=select_pdf_files_and_merge, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
+    select_button.pack(pady=10)
+
+    print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=select_pdf_files_and_print, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
+    print_pdf_button.pack(pady=10)
+
 
 
     root.mainloop()
