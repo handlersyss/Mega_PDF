@@ -97,7 +97,7 @@ def select_pdf_files_and_convert():
             pdf_to_word(files)
         except Exception as e:
             messagebox.showerror("Error", f"Error converting PDF files to Word: {str(e)}")
-
+#So salvando
 #def pdf_to_excel(files):
     #import pandas as pd
     #from tabula import read_pdf
@@ -147,7 +147,7 @@ def pdf_to_excel(files):
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while processing the files: {str(e)}")
 
-
+#So salvando
 #def excel_to_pdf(files):
 #    import win32com.client
 #    if platform.system() == "Windows":
