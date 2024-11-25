@@ -97,24 +97,7 @@ def select_pdf_files_and_convert():
             pdf_to_word(files)
         except Exception as e:
             messagebox.showerror("Error", f"Error converting PDF files to Word: {str(e)}")
-#So salvando
-#def pdf_to_excel(files):
-#    import pandas as pd
-#    from tabula import read_pdf
-#    for file in files:
-#        try:
-#           Le tabelas do PDF
-#            dfs = read_pdf(file, pages="all", multiple_tables=True)
-#            excel_path = os.path.splitext(file)[0] + ".xlsx"
 
-#            Escreve todas as tabelas em um arquivo excel
-#            with pd.ExcelWriter(excel_path) as writer:
-#                for idx, df in enumerate(dfs):
-#                    df.to_excel(writer, sheet_name=f'Table {idx + 1}', index=False)
-#            messagebox.showinfo("Sucess", f"PDF file '{file}' converted to Excel successfully.")
-#        except Exception as e:
-#            messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
-            
 def pdf_to_excel(files):
     import pandas as pd
     from tabula import read_pdf
@@ -146,29 +129,6 @@ def pdf_to_excel(files):
                 messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while processing the files: {str(e)}")
-
-#So salvando
-#def excel_to_pdf(files):
-#    import win32com.client
-#    if platform.system() == "Windows":
-#        #import win32com.client
-#        excel = win32com.client.Dispatch("Excel.Application")
-#        excel.Visible = False
-#        try:
-#            for file in files:
-#                if not os.path.isfile(file):
-#                    messagebox.showwarning("Warning", f"File not found: {file}")
-#                    continue
-#                abs_path = os.path.abspath(file)
-#                pdf_path = os.path.splitext(abs_path) [0] + ".pdf"
-#                workbook = excel.Workbook.Open(abs_path)
-#                workbook.ExportAsFixedFormat(0, pdf_path) # 0 corresponde ao formato PDF
-#                workbook.Close()
-#            excel.Quit()
-#            messagebox.showinfo("Success", "Excel files converted to PDF successfully.")
-#        except Exception as e:
-#            messagebox.showerror("Error", f"Error converting Excel files to PDF: {str(e)}")
-#            excel.Quit()               
 
 def excel_to_pdf(files):
     if platform.system() == "Windows":
