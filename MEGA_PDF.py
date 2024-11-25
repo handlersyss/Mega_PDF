@@ -228,17 +228,17 @@ def creat_gui():
         ("██║╚██╔╝██║██╔══╝  ██║   ██║██╔══██║    ██╔═══╝ ██║  ██║██╔══╝  ", "#A569BD"),
         ("██║ ╚═╝ ██║███████╗╚██████╔╝██║  ██║    ██║     ██████╔╝██║     ", "#7D3C98"),    
         ("╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═════╝ ╚═╝     ", "#A569BD"),
-        ("Criador: Edson França Neto", "purple"),
-        ("Contato: (33)998341977", "purple"),
-        ("E-mail: edsontaylor@outlook.com.br", "purple")
+#        ("Criador: Edson França Neto", "purple"),
+#        ("Contato: (33)998341977", "purple"),
+#        ("E-mail: edsontaylor@outlook.com.br", "purple")
     ]
    
     for line, color in ascii_art_lines:
         label = tk.Label(root, text=line, font=("Courier", 10), fg=color, bg='black')
         label.pack()
 
-    frame = tk.Frame(root, padx=40, pady=40, bg='black')
-    frame.pack(padx=40, pady=40)
+    frame = tk.Frame(root, padx=20, pady=20, bg='black')
+    frame.pack(padx=20, pady=20)
 
     select_word_button = tk.Button(frame, text="Converter Word para PDF", command=select_word_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_word_button.pack(pady=10)
