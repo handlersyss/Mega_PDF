@@ -48,7 +48,6 @@ Siga os passos abaixo para instalar o script:
 
 **OBS: Para evitar erro na hora de fazer a conversão do pdf para excel por falta da biblioteca JVM(Java Virtual Machine) necessária para a execução do Tabula, que é uma ferramenta Java.**
 
------
 
 Aqui estão os passos que você pode seguir para resolver esse problema:
 
