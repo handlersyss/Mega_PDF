@@ -20,9 +20,9 @@ def select_pdf_files_and_merge():
             output_file = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
             if output_file:
                 merge_pdfs(files, output_file)
-                messagebox.showinfo("Success", f"PDF files merged successfully into: {output_file}")
+                messagebox.showinfo("Sucesso", f"Arquivos PDF mesclados com sucesso em: {output_file}")
         except Exception as e:
-            messagebox.showerror("Error", f"Error merging PDF files: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao mesclar arquivos PDF: {str(e)}")
 
 def word_to_pdf(files):
     if platform.system() == "Windows":
@@ -32,42 +32,42 @@ def word_to_pdf(files):
         try:
             for file in files:
                 if not os.path.isfile(file):
-                    messagebox.showwarning("Warning", f"File not found: {file}")
+                    messagebox.showwarning("Aviso", f"Arquivo não encontrado: {file}")
                     continue
                 abs_path = os.path.abspath(file)
                 try:
                     doc = word.Documents.Open(abs_path)
                 except Exception as open_err:
-                    messagebox.showerror("Error", f"Error opening file '{file}': {str(open_err)}")
+                    messagebox.showerror("Erro", f"Erro ao abrir arquivo '{file}': {str(open_err)}")
                     continue
                 pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
                 try: 
                     doc.SaveAs(pdf_path, FileFormat=17) # 17 corresponde ao formato PDF
                     doc.Close()
                 except Exception as save_err:
-                    messagebox.showerror("Error", f"Error saving file '{file}' as PDF: {str(save_err)}")
+                    messagebox.showerror("Erro", f"Erro ao salvar arquivo '{file}' como pdf: {str(save_err)}")
                     doc.Close()
                     continue
             word.Quit()
-            messagebox.showinfo("Success", "Word files converted to PDF successfully.")
+            messagebox.showinfo("Sucesso", "Arquivos Word convertidos para PDF com sucesso.")
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting Word files to PDF: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos Word para PDF: {str(e)}")
             word.Quit()
     else: # Para Linux e outros sistemas operacionais
         try:
             for file in files:
                 if not os.path.isfile(file):
-                    messagebox.showwarning("Warning", f"File not found: {file}")
+                    messagebox.showwarning("Aviso", f"Arquivo não encontrado: {file}")
                     continue
                 abs_path = os.path.abspath(file)
                 pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
                 try:
                     subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', abs_path], check=True)
-                    messagebox.showinfo("Success", f"Word file '{file}' converted to PDF successfully.")
+                    messagebox.showinfo("Sucesso", f"Arquivo Word '{file}' convertido para PDF com sucesso.")
                 except subprocess.CalledProcessError as err:
-                    messagebox.showerror("Error", f"Error converting file '{file}' to PDF: {str(err)}")
+                    messagebox.showerror("Erro", f"Erro ao converter arquivo '{file}' para PDF: {str(err)}")
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting Word files to PDF: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
 
 def select_word_files_and_convert():
     files = filedialog.askopenfilenames(filetypes=[("Word files", "*.docx;*.doc")])
@@ -75,7 +75,7 @@ def select_word_files_and_convert():
         try: 
             word_to_pdf(files)
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting Word files to PDF: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
 
 def pdf_to_word(files):
     import pdf2docx
@@ -86,9 +86,9 @@ def pdf_to_word(files):
         try:
             # Use pdf2docx para converter PDF para Docx
             pdf2docx.parse(pdf_path, docx_path)
-            messagebox.showinfo("Success", f"PDF file '{pdf_name}' converted to Word successfully.")
+            messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting PDF file '{pdf_name}' to Word: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
 
 def select_pdf_files_and_convert():
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
@@ -96,7 +96,7 @@ def select_pdf_files_and_convert():
         try:
             pdf_to_word(files)
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting PDF files to Word: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos PDF para Word: {str(e)}")
 
 def pdf_to_excel(files):
     import pandas as pd
@@ -106,7 +106,7 @@ def pdf_to_excel(files):
     try:
         for file in files:
             if not os.path.isfile(file):
-                messagebox.showwarning("Warning", f"File not found: {file}")
+                messagebox.showwarning("Atenção", f"Arquivo não encontrado: {file}")
                 continue
             try:
                 # Lê tabelas do PDF
@@ -117,18 +117,18 @@ def pdf_to_excel(files):
                 dfs = [df for df in dfs if not df.empty]
 
                 if not dfs:
-                    messagebox.showinfo("Info", f"No tables found in PDF file '{file}' to convert to Excel.")
+                    messagebox.showinfo("Info", f"Nenhuma tabela encontrada no arquivo PDF '{file}' para converter para Excel.")
                     continue
 
                 # Escreve todas as tabelas em um arquivo Excel
                 with pd.ExcelWriter(excel_path) as writer:
                     for idx, df in enumerate(dfs):
                         df.to_excel(writer, sheet_name=f'Table {idx + 1}', index=False)
-                messagebox.showinfo("Success", f"PDF file '{file}' converted to Excel successfully.")
+                messagebox.showinfo("Sucesso", f"Arquivo PDF '{file}' convertido para Excel com sucesso.")
             except Exception as e:
-                messagebox.showerror("Error", f"Error converting PDF file '{file}' to Excel: {str(e)}")
+                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{file}' para Excel: {str(e)}")
     except Exception as e:
-        messagebox.showerror("Error", f"An error occurred while processing the files: {str(e)}")
+        messagebox.showerror("Erro", f"Ocorreu um erro ao processar os arquivos: {str(e)}")
 
 def excel_to_pdf(files):
     if platform.system() == "Windows":
@@ -138,7 +138,7 @@ def excel_to_pdf(files):
         try:
             for file in files:
                 if not os.path.isfile(file):
-                    messagebox.showwarning("Warning", f"File not found: {file}")
+                    messagebox.showwarning("Atenção", f"Arquivo não encontrado: {file}")
                     continue
                 abs_path = os.path.abspath(file)
                 pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
@@ -146,17 +146,17 @@ def excel_to_pdf(files):
                     workbook = excel.Workbooks.Open(abs_path)
                     workbook.ExportAsFixedFormat(0, pdf_path)  # 0 corresponde ao formato PDF
                     workbook.Close(False)
-                    messagebox.showinfo("Success", f"Excel file '{file}' converted to PDF successfully.")
+                    messagebox.showinfo("Sucesso", f"Arquivo Excel '{file}' convertido para PDF com sucesso.")
                 except Exception as convert_err:
-                    messagebox.showerror("Error", f"Error converting file '{file}' to PDF: {str(convert_err)}")
+                    messagebox.showerror("Erro", f"Erro ao converter arquivo '{file}' para PDF: {str(convert_err)}")
                     if workbook:
                         workbook.Close(False)
             excel.Quit()
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting Excel files to PDF: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos Excel para PDF: {str(e)}")
             excel.Quit()
     else:
-        messagebox.showerror("Error", "Excel to PDF conversion is only supported on Windows.")
+        messagebox.showerror("Erro", "A conversão de Excel para PDF só é compatível com Windows.")
 
 
 def select_pdf_files_and_convert_to_excel():
@@ -165,7 +165,7 @@ def select_pdf_files_and_convert_to_excel():
         try:
             pdf_to_excel(files)
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting PDF files to Excel: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos PDF para Excel: {str(e)}")
 
 def select_excel_files_and_convert_to_pdf():
     files = filedialog.askopenfilenames(filetypes=[("Excel files", "*.xlsx;*.xls")])
@@ -173,7 +173,7 @@ def select_excel_files_and_convert_to_pdf():
         try:
             excel_to_pdf(files)
         except Exception as e:
-            messagebox.showerror("Error", f"Error converting Excel files to PDF: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao converter arquivos Excel para PDF: {str(e)}")
 
 def print_pdfs(files):
     for file in files:
@@ -181,13 +181,13 @@ def print_pdfs(files):
             try:
                 os.startfile(file, "print")
             except Exception as e: 
-                messagebox.showerror("Error", f"Error printing file '{file}': {str(e)}")
+                messagebox.showerror("Erro", f"Erro ao imprimir arquivo '{file}': {str(e)}")
         else:
             try:
                 subprocess.run(['lp', file], check=True)
-                messagebox.showeinfo("Sucess", f"PDF file '{file}' sent to printer sucessfully.")
+                messagebox.showeinfo("Sucesso", f"Arquivo PDF '{file}' enviado para a impressora com sucesso.")
             except subprocess.CalledProcessError as arr:
-                messagebox.showerror("Error", f"Error printing file '{file}': {str(e)}")
+                messagebox.showerror("Erro", f"Erro ao imprimir arquivo '{file}': {str(e)}")
 
 def select_pdf_files_and_print():
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
@@ -195,7 +195,7 @@ def select_pdf_files_and_print():
         try:
             print_pdfs(files)
         except Exception as e:
-            messagebox.showerror("Error", f"Error printing PDF files: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao imprimir arquivos PDF: {str(e)}")
 
 def compress_files(files):
     output_file = filedialog.asksaveasfilename(defaultextension=".zip", filetypes=[("ZIP files", "*.zip")])
@@ -204,9 +204,9 @@ def compress_files(files):
             with zipfile.ZipFile(output_file, 'w') as zipf:
                 for file in files:
                     zipf.write(file, os.path.basename(file))
-            messagebox.showinfo("Success", f"Files compressed successfully into: {output_file}")
+            messagebox.showinfo("Sucesso", f"Arquivos compactados com sucesso em: {output_file}")
         except Exception as e:
-            messagebox.showerror("Error", f"Error compressing files: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao compactar arquivos: {str(e)}")
 
 def select_files_and_compress():
     files = filedialog.askopenfilenames()
@@ -214,7 +214,7 @@ def select_files_and_compress():
         try:
             compress_files(files)
         except Exception as e:
-            messagebox.showerror("Error", f"Error compressing files: {str(e)}")
+            messagebox.showerror("Erro", f"Erro ao compactar arquivos: {str(e)}")
 
 def creat_gui():
     root = tk.Tk()
