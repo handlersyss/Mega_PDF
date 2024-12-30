@@ -53,7 +53,7 @@ def word_to_pdf(files):
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word para PDF: {str(e)}")
             word.Quit()
-    else: # Para Linux e outros sistemas operacionais
+    else: # Para Sistemas Linux
         try:
             for file in files:
                 if not os.path.isfile(file):
@@ -91,6 +91,7 @@ def pdf_to_word(files):
             messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
 
 def select_pdf_files_and_convert():
+    
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
