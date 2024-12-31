@@ -1,6 +1,6 @@
 tk
 PyPDF2
-win32com.client
+pywin32
 pdf2docx
 tabula
 pandas
