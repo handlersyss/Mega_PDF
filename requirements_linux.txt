@@ -1,5 +1,5 @@
 cups
-python3-tk
+tk
 libreoffice
 PyPDF2
 pdf2docx
