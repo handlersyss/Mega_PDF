@@ -15,7 +15,7 @@ def verificar_e_obter_caminhos(files):
         caminhos.append(os.path.abspath(file))
     return caminhos
 
-def merge_pdfs(files, output_path):
+def mesclar_pdf(files, output_path):
     try:
         import PyPDF2
     except ImportError as e:
@@ -28,18 +28,18 @@ def merge_pdfs(files, output_path):
     merger.write(output_path)
     merger.close()
 
-def select_pdf_files_and_merge():
+def selecionar_arquivos_pdf_e_mesclar():
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
             output_file = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
             if output_file:
-                merge_pdfs(files, output_file)
+                mesclar_pdf(files, output_file)
                 messagebox.showinfo("Sucesso", f"Arquivos PDF mesclados com sucesso em: {output_file}")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao mesclar arquivos PDF: {str(e)}")
 
-def word_to_pdf(files):
+def word_para_pdf(files):
     if platform.system() == "Windows":
         try:
             import win32com.client
@@ -78,15 +78,15 @@ def word_to_pdf(files):
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
 
-def select_word_files_and_convert():
+def selecionar_arquivos_de_palavras_e_converter():
     files = filedialog.askopenfilenames(filetypes=[("Word files", "*.docx;*.doc")])
     if files:
         try: 
-            word_to_pdf(files)
+            word_para_pdf(files)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
 
-def pdf_to_word(files):
+def pdf_para_word(files):
     try:
         import pdf2docx
     except ImportError as e: 
@@ -104,16 +104,16 @@ def pdf_to_word(files):
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
 
-def select_pdf_files_and_convert():
+def selecionar_arquivos_pdf_e_converter():
     
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
-            pdf_to_word(files)
+            pdf_para_word(files)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos PDF para Word: {str(e)}")
 
-def pdf_to_excel(files):
+def pdf_para_excel(files):
     try:
         import pandas as pd
         import pdfplumber
@@ -153,7 +153,7 @@ def pdf_to_excel(files):
     except Exception as e:
         messagebox.showerror("Erro", f"Erro ao processar arquivos: {str(e)}")
 
-def excel_to_pdf(files):
+def excel_para_pdf(files):
     if platform.system() == "Windows":
         try:
             import win32com.client
@@ -187,23 +187,23 @@ def excel_to_pdf(files):
         messagebox.showerror("Erro", "A conversão de Excel para PDF só é compatível com Windows.")
 
 
-def select_pdf_files_and_convert_to_excel():
+def selecionar_arquivos_pdf_e_converter_para_excel():
     files = filedialog.askopenfilenames(filetype=[("PDF files", "*.pdf")])
     if files:
         try:
-            pdf_to_excel(files)
+            pdf_para_excel(files)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos PDF para Excel: {str(e)}")
 
-def select_excel_files_and_convert_to_pdf():
+def selecionar_arquivos_excel_e_converter_para_pdf():
     files = filedialog.askopenfilenames(filetypes=[("Excel files", "*.xlsx;*.xls")])
     if files:
         try:
-            excel_to_pdf(files)
+            excel_para_pdf(files)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Excel para PDF: {str(e)}")
 
-def print_pdfs(files):
+def imprimir_pdfs(files):
     for file in files:
         if platform.system() == "Windows":
             try:
@@ -217,15 +217,15 @@ def print_pdfs(files):
             except subprocess.CalledProcessError as arr:
                 messagebox.showerror("Erro", f"Erro ao imprimir arquivo '{file}': {str(e)}")
 
-def select_pdf_files_and_print():
+def selecionar_arquivos_pdf_e_imprimir():
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
-            print_pdfs(files)
+            imprimir_pdfs(files)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao imprimir arquivos PDF: {str(e)}")
 
-def compress_files(files):
+def comprimir_arquivos(files):
     output_file = filedialog.asksaveasfilename(defaultextension=".zip", filetypes=[("ZIP files", "*.zip")])
     if output_file:
         try:
@@ -236,15 +236,15 @@ def compress_files(files):
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao compactar arquivos: {str(e)}")
 
-def select_files_and_compress():
+def selecionar_arquivos_e_compactar():
     files = filedialog.askopenfilenames()
     if files:
         try:
-            compress_files(files)
+            comprimir_arquivos(files)
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao compactar arquivos: {str(e)}")
 
-def creat_gui():
+def criar_gui():
     root = tk.Tk()
     root.title("MEGA PDF")
     root.configure(bg='black')
@@ -268,25 +268,25 @@ def creat_gui():
     frame = tk.Frame(root, padx=20, pady=20, bg='black')
     frame.pack(padx=20, pady=20)
 
-    select_word_button = tk.Button(frame, text="Converter Word para PDF", command=select_word_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
+    select_word_button = tk.Button(frame, text="Converter Word para PDF", command=selecionar_arquivos_de_palavras_e_converter, bg='#7D3C98', fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_word_button.pack(pady=10)
 
-    select_pdf_button = tk.Button(frame, text="Converter PDF para Word", command=select_pdf_files_and_convert, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
+    select_pdf_button = tk.Button(frame, text="Converter PDF para Word", command=selecionar_arquivos_pdf_e_converter, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     select_pdf_button.pack(pady=10)
 
-    select_pdf_to_excel_button = tk.Button(frame, text="Converter PDF para Excel", command=select_pdf_files_and_convert_to_excel, bg='#7D3C98', fg='white', highlightbackground='black')
-    select_pdf_to_excel_button.pack(pady=10)
+    select_pdf_para_excel_button = tk.Button(frame, text="Converter PDF para Excel", command=selecionar_arquivos_pdf_e_converter_para_excel, bg='#7D3C98', fg='white', highlightbackground='black')
+    select_pdf_para_excel_button.pack(pady=10)
 
-    select_excel_to_pdf_button = tk.Button(frame, text="Converter Excel para PDF", command=select_excel_files_and_convert_to_pdf, bg='#7D3C98', fg='white', highlightbackground='black')
-    select_excel_to_pdf_button.pack(pady=10)
+    select_excel_para_pdf_button = tk.Button(frame, text="Converter Excel para PDF", command=selecionar_arquivos_excel_e_converter_para_pdf, bg='#7D3C98', fg='white', highlightbackground='black')
+    select_excel_para_pdf_button.pack(pady=10)
 
-    compress_files_button = tk.Button(frame, text="Compactar Arquivos", command=select_files_and_compress, bg='#7D3C98', fg='white', highlightbackground='black')
-    compress_files_button.pack(pady=10)
+    comprimir_arquivos_button = tk.Button(frame, text="Compactar Arquivos", command=selecionar_arquivos_e_compactar, bg='#7D3C98', fg='white', highlightbackground='black')
+    comprimir_arquivos_button.pack(pady=10)
 
-    select_button = tk.Button(frame, text="Juntar PDF", command=select_pdf_files_and_merge, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
+    select_button = tk.Button(frame, text="Juntar PDF", command=selecionar_arquivos_pdf_e_mesclar, bg="#7D3C98", fg='white', highlightbackground='black', highlightcolor='black', activebackground='#A569BD', activeforeground='white')
     select_button.pack(pady=10)
 
-    print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=select_pdf_files_and_print, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
+    print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=selecionar_arquivos_pdf_e_imprimir, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     print_pdf_button.pack(pady=10)
 
 
@@ -294,4 +294,4 @@ def creat_gui():
     root.mainloop()
 
 if __name__=="__main__":
-    creat_gui()
+    criar_gui()
