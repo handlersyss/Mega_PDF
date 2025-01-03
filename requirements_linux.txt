@@ -7,3 +7,4 @@ tabula
 pandas
 openpyxlpip
 JPype1
+pdfplumber
