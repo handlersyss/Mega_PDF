@@ -66,7 +66,7 @@ Defina a variável de ambiente JAVA_HOME: Após instalar o Java, você precisa d
 
 ----
 
-![image](https://github.com/user-attachments/assets/c2d50a6a-cfc2-4ebc-b375-7f82b186e29c)
+![image](https://github.com/user-attachments/assets/aec8199e-28e9-4c9b-bfd4-11016bd12a46)
 
 ----
 
