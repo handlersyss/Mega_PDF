@@ -4,6 +4,6 @@ PyPDF2
 pdf2docx
 tabula
 pandas
-openpyxlpip
+openpyxl
 JPype1
 pdfplumber
