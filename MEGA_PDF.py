@@ -16,7 +16,12 @@ def verificar_e_obter_caminhos(files):
     return caminhos
 
 def merge_pdfs(files, output_path):
-    import PyPDF2
+    try:
+        import PyPDF2
+    except ImportError as e:
+        messagebox.showerror("Erro", f"Erro ao importar PypPDF2:", {str(e)})
+        return
+
     merger = PyPDF2.PdfMerger()
     for pdf in files:
         merger.append(pdf)
@@ -36,7 +41,12 @@ def select_pdf_files_and_merge():
 
 def word_to_pdf(files):
     if platform.system() == "Windows":
-        import win32com.client
+        try:
+            import win32com.client
+        except ImportError as e:
+            messagebox.showerror("Erro", f"Dependência faltando: {str(e)}")
+            return
+
         word = win32com.client.Dispatch("Word.Application")
         word.Visible = False
         try:
@@ -77,7 +87,12 @@ def select_word_files_and_convert():
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
 
 def pdf_to_word(files):
-    import pdf2docx
+    try:
+        import pdf2docx
+    except ImportError as e: 
+        messagebox.showerror("Erro", f"Dependência faltando: {str(e)}")
+        return
+
     for file in files:
         pdf_path = file
         pdf_name = os.path.basename(pdf_path)
@@ -99,9 +114,13 @@ def select_pdf_files_and_convert():
             messagebox.showerror("Erro", f"Erro ao converter arquivos PDF para Word: {str(e)}")
 
 def pdf_to_excel(files):
-    import pandas as pd
-    import pdfplumber
-    import os
+    try:
+        import pandas as pd
+        import pdfplumber
+        import os
+    except ImportError as e:
+        messagebox.showerror("Erro", f"Dependência faltando: {str(e)}")
+        return
 
     try:
         arquivos = verificar_e_obter_caminhos(files)
@@ -136,7 +155,12 @@ def pdf_to_excel(files):
 
 def excel_to_pdf(files):
     if platform.system() == "Windows":
-        import win32com.client
+        try:
+            import win32com.client
+        except ImportError as e:
+            messagebox.showerror("Erro", f"Dependência faltando: {str(e)}")
+            return
+            
         excel = win32com.client.Dispatch("Excel.Application")
         excel.Visible = False
         try:
