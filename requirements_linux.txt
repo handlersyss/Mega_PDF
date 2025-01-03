@@ -1,6 +1,5 @@
 cups
 tk
-libreoffice
 PyPDF2
 pdf2docx
 tabula
