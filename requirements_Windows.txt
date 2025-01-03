@@ -2,7 +2,8 @@ tk
 PyPDF2
 pywin32
 pdf2docx
-tabula
+tabula-py
 pandas
 openpyxl
 JPype1
+pdfplumber
