@@ -96,16 +96,25 @@ def pdf_para_word(files):
     for file in files:
         pdf_path = file
         pdf_name = os.path.basename(pdf_path)
-        docx_path = os.path.splitext(pdf_path)[0] + ".docx"
-        try:
-            # Use pdf2docx para converter PDF para Docx
-            pdf2docx.parse(pdf_path, docx_path)
-            messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
+        if platform.system() == "Windows":
+            docx_path = os.path.splitext(pdf_path)[0] + ".docx"
+            try:
+                # Use pdf2docx para converter PDF para Docx
+                pdf2docx.parse(pdf_path, docx_path)
+                messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
+            except Exception as e:
+                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
+        else:
+            odt_pth = os.path.splitext(pdf_path)[0] + ".odt"
+            try:
+                subprocess.run(['libreoffice', '--headless', '--convert-to', 'odt', pdf_path], check=True)
+                messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
+            except subprocess.CalledProcessError as err:
+                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para ODT: {str(err)}")
+            except Exception as e:
+                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para ODT: {str(e)}")
 
 def selecionar_arquivos_pdf_e_converter():
-    
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
