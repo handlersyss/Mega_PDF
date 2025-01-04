@@ -105,7 +105,7 @@ def pdf_para_word(files):
             except Exception as e:
                 messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
         else:
-            odt_pth = os.path.splitext(pdf_path)[0] + ".odt"
+            odt_path = os.path.splitext(pdf_path)[0] + ".odt"
             try:
                 subprocess.run(['libreoffice', '--headless', '--convert-to', 'odt', pdf_path], check=True)
                 messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
