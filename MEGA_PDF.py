@@ -96,30 +96,28 @@ def pdf_para_word(files):
     for file in files:
         pdf_path = file
         pdf_name = os.path.basename(pdf_path)
-        if platform.system() == "Windows":
-            docx_path = os.path.splitext(pdf_path)[0] + ".docx"
+        docx_path = os.path.splitext(pdf_path)[0] + ".docx"
+        try:
+            #Use pdf2docx para converter PDF para Docx
+            pdf2docx.parse(pdf_path, docx_path)
+            messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Docx: {str(e)}")
+            continue
+
+        if platform.system() != "Windows":
+            od_path = os.path.splitext(pdf_path)[0] + ".odt"
             try:
-                # Use pdf2docx para converter PDF para Docx
-                pdf2docx.parse(pdf_path, docx_path)
-                messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
-            except Exception as e:
-                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Word: {str(e)}")
-        else:
-            docx_path = os.path.splitext(pdf_path)[0] + ".docx"
-            odt_path = os.path.splitext(pdf_path)[0] + ".odt"
-            try:
-                # Use pdf2docx para converter PDF para Docx
-                pdf2docx.parse(pdf_path, docx_path)
-                # Use Libreoffice para converter Docx para ODT
-                result = subprocess.run(['libreoffice', '--headless', '--convert-to', 'odt', pdf_path], check=True, capture_output=True, text=True)
+               # Use Libreoffice para converter Docx para ODT
+                result = subprocess.run(['libreoffice', '--headless', '--convert-to', 'odt', docx_path], check=True, capture_output=True, text=True)
                 if result.returncode == 0:
-                    messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
+                   messagebox.showinfo("Sucesso", f"Arquivo Docx '{pdf_name}' convertido para ODT com sucesso.")
                 else:
-                    messagebox.showerror("Erro", f"Erro ao converter '{pdf_name}' para ODT: {result.stderr}")
+                   messagebox.showerror("Erro", f"Erro ao converter '{pdf_name}' para ODT: {result.stderr}")
             except subprocess.CalledProcessError as err:
-                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para ODT: {str(err)}")
+                messagebox.showerror("Erro", f"Erro ao converter arquivo Docx '{pdf_name}' para ODT: {str(err)}")
             except Exception as e:
-                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para ODT: {str(e)}")
+                messagebox.showerror("Erro", f"Erro ao converter arquivo Docx '{pdf_name}' para ODT: {str(e)}")
 
 def selecionar_arquivos_pdf_e_converter():
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
