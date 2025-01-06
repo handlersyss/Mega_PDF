@@ -79,7 +79,7 @@ def word_para_pdf(files):
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
 
 def selecionar_arquivos_de_palavras_e_converter():
-    files = filedialog.askopenfilenames(filetypes=[("Word files", "*.docx;*.doc")])
+    files = filedialog.askopenfilenames(filetypes=[("Word files", "*.docx;*.doc;*.odt")])
     if files:
         try: 
             word_para_pdf(files)
