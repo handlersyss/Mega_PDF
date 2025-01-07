@@ -1,5 +1,5 @@
 cups
-tk
+python3-tk
 PyPDF2
 pdf2docx
 tabula
