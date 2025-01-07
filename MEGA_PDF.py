@@ -5,8 +5,6 @@ import subprocess
 import platform
 import zipfile
 
-#teste
-
 # Função auxiliar para verificar e obter caminhos absolutos dos arquivos
 def verificar_e_obter_caminhos(files):
     ''''
