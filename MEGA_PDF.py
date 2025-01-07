@@ -7,6 +7,7 @@ import zipfile
 
 # Função auxiliar para verificar e obter caminhos absolutos dos arquivos
 def verificar_e_obter_caminhos(files):
+    ''''
     caminhos = []
     for file in files:
         if not os.path.isfile(file):
@@ -14,6 +15,21 @@ def verificar_e_obter_caminhos(files):
             continue
         caminhos.append(os.path.abspath(file))
     return caminhos
+    '''
+    caminhos_validos = []
+    arquivos_invalidos = []
+
+    for file in files:
+        if os.path.isfile(file):
+            caminhos_validos.append(os.path.abspath(file))
+        else:
+            arquivos_invalidos.append(file)
+
+    if arquivos_invalidos:
+        mensagem = "\n".join(arquivos_invalidos)
+        messagebox.showwarning("Aviso", f"Arquivos não encontrados: \n{mensagem}")
+
+    return caminhos_validos
 
 def mesclar_pdf(files, output_path):
     try:
