@@ -1,6 +1,7 @@
-tk
+python3-tk
 PyPDF2
 pywin32
+pypiwin32
 pdf2docx
 tabula-py
 pandas
