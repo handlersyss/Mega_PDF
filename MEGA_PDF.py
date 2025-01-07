@@ -67,6 +67,10 @@ def word_para_pdf(files):
         word.Visible = False
         try:
             arquivos = verificar_e_obter_caminhos(files)
+            if not arquivos:
+                messagebox.showwarning("Aviso", "Nenhum arquivo foi selecionado.")
+                return
+            
             for abs_path in arquivos:
                 try:
                     doc = word.Documents.Open(abs_path)
