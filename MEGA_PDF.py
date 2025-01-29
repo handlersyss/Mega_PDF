@@ -91,7 +91,7 @@ def word_para_pdf(files):
             for abs_path in arquivos:
                 try:
                     output_dir = os.path.dirname(abs_path)
-                    subprocess.run(['/usr/bin/libreoffice', '--headless', '--convert-to', 'pdf', abs_path], check=True)           
+                    subprocess.run(['/usr/bin/libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', output_dir, abs_path], check=True)           
                     messagebox.showinfo("Sucesso", f"Arquivo Word '{abs_path}' convertido para PDF com sucesso.")
                 except subprocess.CalledProcessError as err:
                     messagebox.showerror("Erro", f"Erro ao converter '{abs_path}' para PDF: {str(err)}")
