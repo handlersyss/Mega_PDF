@@ -90,7 +90,7 @@ def word_para_pdf(files):
             arquivos = verificar_e_obter_caminhos(files)
             for abs_path in arquivos:
                 try:
-                    subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', abs_path], check=True)           
+                    subprocess.run(['/usr/bin/libreoffice', '--headless', '--convert-to', 'pdf', abs_path], check=True)           
                     messagebox.showinfo("Sucesso", f"Arquivo Word '{abs_path}' convertido para PDF com sucesso.")
                 except subprocess.CalledProcessError as err:
                     messagebox.showerror("Erro", f"Erro ao converter '{abs_path}' para PDF: {str(err)}")
@@ -175,7 +175,7 @@ def pdf_para_excel(files):
                             df.to_excel(writer, sheet_name=f'Tabla {idx + 1}', index=False)
                     else:
                         #Cria um DataFrame vazio para evitar erro ao salvar o arquivo Excel
-                        df = pd.DataFrame(["Nenhuma tabela encontrada no arquivo PDF."])
+                        df = pd.DataFrame(table[1:], columns=table[0], errors='ignore')
                         df.to_excel(writer, sheet_name='Sem Tables', index=False)
                         
                     messagebox.showinfo("Sucesso", f"Arquivo PDF '{abs_path}' convertido para Excel com sucesso.")
@@ -264,7 +264,8 @@ def comprimir_arquivos(files):
         try:
             with zipfile.ZipFile(output_file, 'w') as zipf:
                 for file in files:
-                    zipf.write(file, os.path.basename(file))
+                    if os.path.isfile(file):
+                        zipf.write(file, os.path.basename(file))
             messagebox.showinfo("Sucesso", f"Arquivos compactados com sucesso em: {output_file}")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao compactar arquivos: {str(e)}")
@@ -289,9 +290,7 @@ def criar_gui():
         ("██║╚██╔╝██║██╔══╝  ██║   ██║██╔══██║    ██╔═══╝ ██║  ██║██╔══╝  ", "#A569BD"),
         ("██║ ╚═╝ ██║███████╗╚██████╔╝██║  ██║    ██║     ██████╔╝██║     ", "#7D3C98"),    
         ("╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═════╝ ╚═╝     ", "#A569BD"),
-#        ("Criador: Edson França Neto", "purple"),
-#        ("Contato: (33)998341977", "purple"),
-#        ("E-mail: edsontaylor@outlook.com.br", "purple")
+        
     ]
    
     for line, color in ascii_art_lines:
