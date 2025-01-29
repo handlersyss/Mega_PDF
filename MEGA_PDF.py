@@ -59,8 +59,8 @@ def word_para_pdf(files):
                 try:
                     doc = word.Documents.Open(abs_path)
                     pdf_path = os.path.splitext(abs_path)[0] + ".pdf"
-                    doc.SaveAs(pdf_path, FileFormat=17)
-                    doc.Close()
+                    doc.ExportAsFixedFormat(pdf_path, 17)
+                    doc.Close(False)
                 except Exception as err:
                     messagebox.showerror("Erro", f"Erro ao processar '{abs_path}': {str(err)}")
                     if doc:
@@ -93,18 +93,21 @@ def selecionar_arquivos_de_palavras_e_converter():
 
 def pdf_para_word(files):
     try:
-        import pdf2docx
+        from pdf2docx import Converter
     except ImportError as e: 
         messagebox.showerror("Erro", f"Dependência faltando: {str(e)}")
         return
-
+    
     for file in files:
         pdf_path = file
         pdf_name = os.path.basename(pdf_path)
         docx_path = os.path.splitext(pdf_path)[0] + ".docx"
         try:
             #Use pdf2docx para converter PDF para Docx
-            pdf2docx.parse(pdf_path, docx_path)
+            #pdf2docx.parse(pdf_path, docx_path)
+            cv = Converter(pdf_path)
+            cv.convert(docx_path, start=0, end=None, continuous=True)  # Converte todas as páginas
+            cv.close()
             messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{pdf_name}' para Docx: {str(e)}")
