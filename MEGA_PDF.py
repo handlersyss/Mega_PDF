@@ -14,22 +14,7 @@ def verificar_e_obter_caminhos(files):
             continue
         caminhos.append(os.path.abspath(file))
     return caminhos
-    '''
-    caminhos_validos = []
-    arquivos_invalidos = []
 
-    for file in files:
-        if os.path.isfile(file):
-            caminhos_validos.append(os.path.abspath(file))
-        else:
-            arquivos_invalidos.append(file)
-
-    if arquivos_invalidos:
-        mensagem = "\n".join(arquivos_invalidos)
-        messagebox.showwarning("Aviso", f"Arquivos não encontrados: \n{mensagem}")
-
-    return caminhos_validos
-    '''
 def mesclar_pdf(files, output_path):
     try:
         import PyPDF2
@@ -222,7 +207,7 @@ def excel_para_pdf(files):
 
 
 def selecionar_arquivos_pdf_e_converter_para_excel():
-    files = filedialog.askopenfilenames(filetype=[("PDF files", "*.pdf")])
+    files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
     if files:
         try:
             pdf_para_excel(files)
