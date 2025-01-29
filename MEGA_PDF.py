@@ -230,7 +230,7 @@ def selecionar_arquivos_pdf_e_converter_para_excel():
             messagebox.showerror("Erro", f"Erro ao converter arquivos PDF para Excel: {str(e)}")
 
 def selecionar_arquivos_excel_e_converter_para_pdf():
-    files = filedialog.askopenfilenames(filetypes=[("Excel files", "*.xlsx;*.xls")])
+    files = filedialog.askopenfilenames(filetypes=[("Excel files", "*.xlsx"), ("Excel files", "*.xls")])
     if files:
         try:
             excel_para_pdf(files)
