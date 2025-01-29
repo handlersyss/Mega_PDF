@@ -34,7 +34,7 @@ def mesclar_pdf(files, output_path):
     try:
         import PyPDF2
     except ImportError as e:
-        messagebox.showerror("Erro", f"Erro ao importar PypPDF2:", {str(e)})
+        messagebox.showerror("Erro", f"Erro ao importar PypPDF2: {str(e)}")
         return
 
     merger = PyPDF2.PdfMerger()
@@ -182,7 +182,7 @@ def pdf_para_excel(files):
             except UnicodeDecodeError as ude:
                 messagebox.showerror("Erro", f"Erro ao processar arquivo PDF '{abs_path}': {str(ude)}")
             except Exception as e:
-                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{abs_path}' para Excel: [str(e)]")
+                messagebox.showerror("Erro", f"Erro ao converter arquivo PDF '{abs_path}' para Excel: {str(e)}")
     except Exception as e:
         messagebox.showerror("Erro", f"Erro ao processar arquivos: {str(e)}")
 
@@ -246,7 +246,7 @@ def imprimir_pdfs(files):
         else:
             try:
                 subprocess.run(['lp', file], check=True)
-                messagebox.showeinfo("Sucesso", f"Arquivo PDF '{file}' enviado para a impressora com sucesso.")
+                messagebox.showinfo("Sucesso", f"Arquivo PDF '{file}' enviado para a impressora com sucesso.")
             except subprocess.CalledProcessError as arr:
                 messagebox.showerror("Erro", f"Erro ao imprimir arquivo '{file}': {str(e)}")
 
