@@ -103,7 +103,6 @@ def pdf_para_word(files):
         pdf_name = os.path.basename(pdf_path)
         docx_path = os.path.splitext(pdf_path)[0] + ".docx"
         try:
-            #Use pdf2docx para converter PDF para Docx
             #pdf2docx.parse(pdf_path, docx_path)
             cv = Converter(pdf_path)
             cv.convert(docx_path, start=0, end=None, continuous=True)  # Converte todas as páginas
@@ -116,7 +115,6 @@ def pdf_para_word(files):
         if platform.system() != "Windows":
             od_path = os.path.splitext(pdf_path)[0] + ".odt"
             try:
-               # Use Libreoffice para converter Docx para ODT
                 result = subprocess.run(['libreoffice', '--headless', '--convert-to', 'odt', docx_path], check=True, capture_output=True, text=True)
                 if result.returncode == 0:
                    messagebox.showinfo("Sucesso", f"Arquivo Docx '{pdf_name}' convertido para ODT com sucesso.")
