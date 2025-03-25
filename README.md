@@ -1,74 +1,90 @@
-# Mega PDF
+# 📄 Mega PDF
 
-Este repositório contém um script robusto que permite:
+Uma ferramenta poderosa para manipulação de arquivos PDF com múltiplas funcionalidades.
 
-- **Junção de arquivos PDF
-- **Conversão entre formatos Word e PDF (e vice-versa)
-- **Conversão entre PDF e Excel (e vice-versa)
-- **Impressão de arquivos sem limites
-- **Compactação de arquivos
+## ✨ Funcionalidades
 
-O script é compatível tanto com Linux quanto com Windows. Para utilizar todas as funcionalidades, certifique-se de ter todos os requisitos instalados a partir dos arquivos .txt fornecidos.
+- 📎 Junção de arquivos PDF
+- 🔄 Conversão entre formatos Word e PDF (bidirecional)
+- 📊 Conversão entre PDF e Excel (bidirecional)
+- 🖨️ Impressão de arquivos sem limitações
+- 📦 Compactação de arquivos
 
-Para realizar impressões, é necessário ter um leitor de PDF instalado e associado ao tipo de arquivo PDF no Windows. No Linux, certifique-se de que o CUPS (Common UNIX Printing System) esteja instalado e funcionando, pois o comando lp depende dele.
+## 💻 Compatibilidade
 
-Este programa é ideal para quem precisa gerenciar e converter documentos de maneira eficiente e sem restrições.
+O script é compatível com:
+- Windows
+- Linux
 
-**OBS: Algumas funções podem não funcionar no sistema Linux, eu peço que aguardem para novas atualizações do script para á perfeita execussão do programa.**
+## 📋 Pré-requisitos
 
-----
-## Instalação
+### Windows
+- Leitor de PDF instalado e associado aos arquivos .pdf
+- Java Development Kit (JDK) para conversão PDF-Excel
 
-Siga os passos abaixo para instalar o script:
+### Linux
+- CUPS (Common UNIX Printing System) instalado
+- Dependências listadas no arquivo requirements_linux.txt
 
-1. **Clone o repositório:**
+## 🚀 Instalação
 
+1. Clone o repositório:
 ```bash
-   git clone https://github.com/handlersyss/Mega_PDF.git
+git clone https://github.com/handlersyss/Mega_PDF.git
 ```
 
-2. **Acesse o diretório do projeto:**
-
+2. Acesse o diretório:
 ```bash
-    cd nome-do-repositorio
+cd Mega_PDF
 ```
 
-3. **Instale as dependências:**
-
+3. Instale as dependências:
 ```bash
-    pip3 install -r requirements_linux.txt 
-    ou requirements_Windows.txt
+# Para Linux
+pip3 install -r requirements_linux.txt
+
+# Para Windows
+pip3 install -r requirements_Windows.txt
 ```
 
-4. **Execute o script:**
-
+4. Execute o programa:
 ```bash
-    python3 MEGA_PDF.py
+python3 MEGA_PDF.py
 ```
-----
-**OBS: Para evitar erro na hora de fazer a conversão do pdf para excel por falta da biblioteca JVM(Java Virtual Machine) necessária para a execução do Tabula, que é uma ferramenta Java.**
 
+## ⚠️ Configuração do Java (Importante)
 
-Aqui estão os passos que você pode seguir para resolver esse problema:
+Para a funcionalidade de conversão PDF para Excel, é necessário configurar corretamente o JVM (Java Virtual Machine):
 
-Instale o Java: Você precisa ter o Java Development Kit (JDK) instalado em seu sistema. Você pode baixá-lo do site oficial do Oracle ou usar o OpenJDK.
+1. Instale o Java Development Kit (JDK)
+   - Baixe do site oficial da Oracle ou use OpenJDK
 
-Defina a variável de ambiente JAVA_HOME: Após instalar o Java, você precisa definir a variável de ambiente JAVA_HOME para apontar para o diretório de instalação do JDK. Aqui está como fazer isso no Windows:
+2. Configure a variável JAVA_HOME:
+   - Abra as Propriedades do Sistema
+   - Acesse "Configurações avançadas do sistema"
+   - Clique em "Variáveis de ambiente"
+   - Em "Variáveis do sistema", adicione JAVA_HOME
+   - Defina o caminho do JDK (exemplo: C:\Program Files\Java\jdk-11.0.2)
 
-- Clique com o botão direito no ícone "Meu Computador" ou "Este PC" na área de trabalho ou no explorador de arquivos e selecione "Propriedades".
-- Clique em "Configurações avançadas do sistema".
-- Clique em "Variáveis de ambiente".
-- Em "Variáveis do sistema", clique em "Novo".
-- Adicione JAVA_HOME como o nome da variável e o caminho do diretório do JDK (por exemplo, C:\Program Files\Java\jdk-11.0.2) como o valor da variável.
-- Clique em "OK" para salvar as mudanças.
-- Verifique se o Java está funcionando: Abra o Prompt de Comando e digite java -version para verificar se o Java está corretamente instalado e configurado.
-- Reinicie o Python: Certifique-se de reiniciar qualquer script ou terminal Python para que ele reconheça as novas variáveis de ambiente.
+3. Verifique a instalação:
+```bash
+java -version
+```
 
-----
+## 📸 Interface
 
-![image](https://github.com/user-attachments/assets/aec8199e-28e9-4c9b-bfd4-11016bd12a46)
+![Interface do Mega PDF](https://github.com/user-attachments/assets/aec8199e-28e9-4c9b-bfd4-11016bd12a46)
 
-----
+## ⚠️ Nota sobre Linux
 
+Algumas funcionalidades podem apresentar limitações no sistema Linux. Atualizações futuras trarão melhorias para total compatibilidade.
 
-Feedback e sugestões são bem-vindos! Sinta-se à vontade para compartilhar suas opiniões, ideias e melhorias para este script. Sua contribuição é muito apreciada.
+## 🤝 Contribuição
+
+Feedback e sugestões são muito bem-vindos! Sinta-se à vontade para:
+- Reportar bugs
+- Sugerir novas funcionalidades
+- Melhorar a documentação
+- Enviar pull requests
+
+---
