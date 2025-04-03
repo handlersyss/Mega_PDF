@@ -19,7 +19,7 @@ def mesclar_pdf(files, output_path):
     try:
         import PyPDF2
     except ImportError as e:
-        messagebox.showerror("Erro", f"Erro ao importar PypPDF2: {str(e)}")
+        messagebox.showerror("Erro", f"Erro ao importar PyPDF2: {str(e)}")
         return
 
     merger = PyPDF2.PdfMerger()
@@ -63,22 +63,28 @@ def word_para_pdf(files):
                     doc.Close(False)
                 except Exception as err:
                     messagebox.showerror("Erro", f"Erro ao processar '{abs_path}': {str(err)}")
-                    if doc:
-                        doc.close()
+                    try:
+                        if 'doc' in locals() and doc:
+                            doc.Close(False)
+                    except:
+                        pass
             word.Quit()
             messagebox.showinfo("Sucesso", "Arquivos Word convertidos para PDF com sucesso.")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word para PDF: {str(e)}")
-            word.Quit()
+            try:
+                word.Quit()
+            except:
+                pass
     else:
         try:
             arquivos = verificar_e_obter_caminhos(files)
             for abs_path in arquivos:
                 try:
                     output_dir = os.path.dirname(abs_path)
-                    subprocess.run(['/usr/bin/libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', output_dir, abs_path], check=True)           
+                    subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', output_dir, abs_path], check=True)           
                     messagebox.showinfo("Sucesso", f"Arquivo Word '{abs_path}' convertido para PDF com sucesso.")
-                except subprocess.CalledProcebssError as err:
+                except subprocess.CalledProcessError as err:
                     messagebox.showerror("Erro", f"Erro ao converter '{abs_path}' para PDF: {str(err)}")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Word em PDF: {str(e)}")
@@ -103,9 +109,8 @@ def pdf_para_word(files):
         pdf_name = os.path.basename(pdf_path)
         docx_path = os.path.splitext(pdf_path)[0] + ".docx"
         try:
-            #pdf2docx.parse(pdf_path, docx_path)
             cv = Converter(pdf_path)
-            cv.convert(docx_path, start=0, end=None, continuous=True)  # Converte todas as páginas
+            cv.convert(docx_path, start=0, end=None)  # Converte todas as páginas
             cv.close()
             messagebox.showinfo("Sucesso", f"Arquivo PDF '{pdf_name}' convertido para Word com sucesso.")
         except Exception as e:
@@ -137,7 +142,6 @@ def pdf_para_excel(files):
     try:
         import pandas as pd
         import pdfplumber
-        import os
     except ImportError as e:
         messagebox.showerror("Erro", f"Dependência faltando: {str(e)}")
         return
@@ -152,20 +156,25 @@ def pdf_para_excel(files):
                     for page in pdf.pages:
                         tables = page.extract_tables()
                         for table in tables:
-                            df = pd.DataFrame(table[1:], columns=table[0])
-                            all_tables.append(df)
+                            if table and len(table) > 0:
+                                # Verifica se a tabela tem cabeçalho
+                                if table[0]:
+                                    df = pd.DataFrame(table[1:], columns=table[0])
+                                else:
+                                    df = pd.DataFrame(table)
+                                all_tables.append(df)
 
                 excel_path = os.path.splitext(abs_path)[0] + ".xlsx"
-                with pd.ExcelWriter(excel_path) as writer:
+                with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
                     if all_tables:
                         for idx, df in enumerate(all_tables):
-                            df.to_excel(writer, sheet_name=f'Tabla {idx + 1}', index=False)
+                            df.to_excel(writer, sheet_name=f'Tabela {idx + 1}', index=False)
                     else:
-                        #Cria um DataFrame vazio para evitar erro ao salvar o arquivo Excel
-                        df = pd.DataFrame(table[1:], columns=table[0], errors='ignore')
-                        df.to_excel(writer, sheet_name='Sem Tables', index=False)
+                        # Cria um DataFrame vazio para evitar erro ao salvar o arquivo Excel
+                        df = pd.DataFrame()
+                        df.to_excel(writer, sheet_name='Sem Tabelas', index=False)
                         
-                    messagebox.showinfo("Sucesso", f"Arquivo PDF '{abs_path}' convertido para Excel com sucesso.")
+                messagebox.showinfo("Sucesso", f"Arquivo PDF '{os.path.basename(abs_path)}' convertido para Excel com sucesso.")
             except UnicodeDecodeError as ude:
                 messagebox.showerror("Erro", f"Erro ao processar arquivo PDF '{abs_path}': {str(ude)}")
             except Exception as e:
@@ -183,6 +192,7 @@ def excel_para_pdf(files):
             
         excel = win32com.client.Dispatch("Excel.Application")
         excel.Visible = False
+        workbook = None
         try:
             for file in files:
                 if not os.path.isfile(file):
@@ -194,18 +204,34 @@ def excel_para_pdf(files):
                     workbook = excel.Workbooks.Open(abs_path)
                     workbook.ExportAsFixedFormat(0, pdf_path)  # 0 corresponde ao formato PDF
                     workbook.Close(False)
-                    messagebox.showinfo("Sucesso", f"Arquivo Excel '{file}' convertido para PDF com sucesso.")
+                    messagebox.showinfo("Sucesso", f"Arquivo Excel '{os.path.basename(file)}' convertido para PDF com sucesso.")
                 except Exception as convert_err:
                     messagebox.showerror("Erro", f"Erro ao converter arquivo '{file}' para PDF: {str(convert_err)}")
                     if workbook:
-                        workbook.Close(False)
+                        try:
+                            workbook.Close(False)
+                        except:
+                            pass
             excel.Quit()
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao converter arquivos Excel para PDF: {str(e)}")
-            excel.Quit()
+            try:
+                if excel:
+                    excel.Quit()
+            except:
+                pass
     else:
-        messagebox.showerror("Erro", "A conversão de Excel para PDF só é compatível com Windows.")
-
+        try:
+            arquivos = verificar_e_obter_caminhos(files)
+            for abs_path in arquivos:
+                try:
+                    output_dir = os.path.dirname(abs_path)
+                    subprocess.run(['libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', output_dir, abs_path], check=True)
+                    messagebox.showinfo("Sucesso", f"Arquivo Excel '{os.path.basename(abs_path)}' convertido para PDF com sucesso.")
+                except subprocess.CalledProcessError as err:
+                    messagebox.showerror("Erro", f"Erro ao converter '{abs_path}' para PDF: {str(err)}")
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao converter arquivos Excel para PDF: {str(e)}")
 
 def selecionar_arquivos_pdf_e_converter_para_excel():
     files = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
@@ -234,7 +260,9 @@ def imprimir_pdfs(files):
             try:
                 subprocess.run(['lp', file], check=True)
                 messagebox.showinfo("Sucesso", f"Arquivo PDF '{file}' enviado para a impressora com sucesso.")
-            except subprocess.CalledProcessError as arr:
+            except subprocess.CalledProcessError as err:
+                messagebox.showerror("Erro", f"Erro ao imprimir arquivo '{file}': {str(err)}")
+            except Exception as e:
                 messagebox.showerror("Erro", f"Erro ao imprimir arquivo '{file}': {str(e)}")
 
 def selecionar_arquivos_pdf_e_imprimir():
@@ -277,7 +305,6 @@ def criar_gui():
         ("██║╚██╔╝██║██╔══╝  ██║   ██║██╔══██║    ██╔═══╝ ██║  ██║██╔══╝  ", "#A569BD"),
         ("██║ ╚═╝ ██║███████╗╚██████╔╝██║  ██║    ██║     ██████╔╝██║     ", "#7D3C98"),    
         ("╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═════╝ ╚═╝     ", "#A569BD"),
-
     ]
    
     for line, color in ascii_art_lines:
@@ -307,8 +334,6 @@ def criar_gui():
 
     print_pdf_button = tk.Button(frame, text="Imprimir PDF", command=selecionar_arquivos_pdf_e_imprimir, bg='#7D3C98', fg='white', highlightbackground='black', activeforeground='white')
     print_pdf_button.pack(pady=10)
-
-
 
     root.mainloop()
 
